@@ -21,8 +21,8 @@ def get_rand_bbox(image, l):
     r_l = np.sqrt(1 - l)
     r_w = np.int(width * r_l)
     r_h = np.int(height * r_l)
-    bb_x_1 = np.int(np.clip(width - r_w, 0, width))
-    bb_y_1 = np.int(np.clip(height - r_h, 0, width))
+    bb_x_1 = np.int(np.clip(r_x - r_w, 0, width))
+    bb_y_1 = np.int(np.clip(r_y - r_h, 0, width))
     bb_x_2 = np.int(np.clip(r_x + r_w, 0, width))
     bb_y_2 = np.int(np.clip(r_y + r_h, 0, width))
     return bb_x_1, bb_y_1, bb_x_2, bb_y_2
