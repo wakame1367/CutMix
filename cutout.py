@@ -41,12 +41,12 @@ class CutMixGenerator:
         X2 = self.X_train[batch_ids[self.batch_size:]]
         y1 = self.y_train[batch_ids[:self.batch_size]]
         y2 = self.y_train[batch_ids[self.batch_size:]]
-        l = np.random.beta(self.alpha, self.alpha, self.batch_size)
-        X_l = l.reshape(self.batch_size, 1, 1, 1)
-        y_l = l.reshape(self.batch_size, 1)
+        lam = np.random.beta(self.alpha, self.alpha)
 
-        X = X1 * X_l + X2 * (1 - X_l)
-        y = y1 * y_l + y2 * (1 - y_l)
+        bx1, by1, bx2, by2 = get_rand_bbox(X1[0], lam)
+        X1[:, bx1:bx2, by1:by2, :] = X2[:, bx1:bx2, by1:by2, :]
+        X = X1
+        y = y1 * lam + y2 * (1 - lam)
 
         if self.data_gen:
             for i in range(self.batch_size):
