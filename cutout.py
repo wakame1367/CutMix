@@ -78,13 +78,9 @@ def get_rand_bbox(width, height, l):
 def main():
     np.random.seed(2019)
     (x_train, y_train), (_, _) = mnist.load_data()
-    label = 1
-    target_label = 2
     alpha = 0.2
-    labels = y_train[y_train == label]
-    target_labels = y_train[y_train == target_label]
-    l_rand_idx = np.random.randint(labels.shape[0])
-    t_rand_idx = np.random.randint(target_labels.shape[0])
+    l_rand_idx = np.random.randint(x_train.shape[0])
+    t_rand_idx = np.random.randint(x_train.shape[0])
     image = np.transpose(x_train[None, l_rand_idx], (1, 2, 0))
     target_image = np.transpose(x_train[None, t_rand_idx], (1, 2, 0))
     plt.subplot(1, 3, 1)
