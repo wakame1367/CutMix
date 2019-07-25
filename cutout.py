@@ -62,11 +62,7 @@ def is_channel_last(image):
     assert image_data_format() == "channels_last"
 
 
-def get_rand_bbox(image, l):
-    # Note image is channel last
-    is_channel_last(image)
-    width = image.shape[0]
-    height = image.shape[1]
+def get_rand_bbox(width, height, l):
     r_x = np.random.randint(width)
     r_y = np.random.randint(height)
     r_l = np.sqrt(1 - l)
