@@ -80,32 +80,28 @@ def main():
     (x_train, y_train), (_, _) = mnist.load_data()
     label = 1
     target_label = 2
+    alpha = 0.2
     labels = y_train[y_train == label]
     target_labels = y_train[y_train == target_label]
-    print(labels.shape)
-    print(target_labels.shape)
     l_rand_idx = np.random.randint(labels.shape[0])
     t_rand_idx = np.random.randint(target_labels.shape[0])
     image = np.transpose(x_train[None, l_rand_idx], (1, 2, 0))
     target_image = np.transpose(x_train[None, t_rand_idx], (1, 2, 0))
-    plt.subplot(221)
+    plt.subplot(1, 3, 1)
     plt.imshow(x_train[l_rand_idx], cmap=plt.get_cmap('gray'))
-    plt.subplot(222)
+    plt.subplot(1, 3, 2)
     plt.imshow(x_train[t_rand_idx], cmap=plt.get_cmap('gray'))
 
     print(image.shape)
     print(target_image.shape)
-    rand_l = np.random.beta(0.2, 0.2)
+    rand_l = np.random.beta(alpha, alpha)
     print(rand_l)
-    bx1, by1, bx2, by2 = get_rand_bbox(image, rand_l)
+    bx1, by1, bx2, by2 = get_rand_bbox(image.shape[0], image.shape[1], rand_l)
     print("{}, {}, {}, {}".format(bx1, by1, bx2, by2))
     target_image[bx1:bx2, by1:by2, :] = image[bx1:bx2, by1:by2, :]
-    plt.subplot(223)
-    plt.imshow(image[bx1:bx2, by1:by2, :].transpose((2, 0, 1))[0],
-               cmap=plt.get_cmap('gray'))
-    plt.subplot(224)
+    plt.subplot(1, 3, 3)
     plt.imshow(target_image.transpose((2, 0, 1))[0], cmap=plt.get_cmap('gray'))
-    plt.savefig("images/image.png")
+    plt.savefig("images/mnist.png")
     plt.close()
 
 
