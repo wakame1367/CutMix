@@ -35,10 +35,12 @@ class CutMixGenerator:
     def __data_generation(self, batch_ids):
         _, h, w, c = self.X_train.shape
         _, class_num = self.y_train.shape
-        X1 = self.X_train[batch_ids[:self.batch_size]]
-        X2 = self.X_train[batch_ids[self.batch_size:]]
-        y1 = self.y_train[batch_ids[:self.batch_size]]
-        y2 = self.y_train[batch_ids[self.batch_size:]]
+        batch_index = batch_ids[:self.batch_size]
+        rand_index = np.random.permutation(batch_index)
+        X1 = self.X_train[batch_index]
+        X2 = self.X_train[rand_index]
+        y1 = self.y_train[batch_index]
+        y2 = self.y_train[rand_index]
         lam = np.random.beta(self.alpha, self.alpha)
 
         bx1, by1, bx2, by2 = get_rand_bbox(w, h, lam)
