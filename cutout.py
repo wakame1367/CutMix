@@ -41,7 +41,7 @@ class CutMixGenerator:
         y2 = self.y_train[batch_ids[self.batch_size:]]
         lam = np.random.beta(self.alpha, self.alpha)
 
-        bx1, by1, bx2, by2 = get_rand_bbox(X1[0], lam)
+        bx1, by1, bx2, by2 = get_rand_bbox(w, h, lam)
         X1[:, bx1:bx2, by1:by2, :] = X2[:, bx1:bx2, by1:by2, :]
         X = X1
         y = y1 * lam + y2 * (1 - lam)
